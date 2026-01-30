@@ -2,11 +2,11 @@
   "name": "express-crud",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "dist/server.js",
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
-    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/server.ts",
+    "dev": "tsx watch src/server.ts",
     "lint": "eslint 'src/**/*.ts'"
   },
   "keywords": [],
@@ -14,15 +14,19 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "@prisma/adapter-pg": "^7.3.0",
+    "@prisma/client": "^7.3.0",
     "dotenv": "^17.2.2",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "pg": "^8.17.2"
   },
   "devDependencies": {
     "@types/express": "^5.0.3",
     "@types/node": "^24.5.2",
+    "@types/pg": "^8.16.0",
     "eslint": "^9.36.0",
-    "nodemon": "^3.1.10",
-    "ts-node": "^10.9.2",
+    "prisma": "^7.3.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.2"
   }
 }
