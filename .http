@@ -1,7 +1,7 @@
-POST http://localhost:3001/user HTTP/1.1
+POST http://localhost:3001/auth/signup HTTP/1.1
 content-type: application/json
 
 {
-    "name": "test",
-    "email": "test@gmail.com"
+    "email": "test@gmail.com",
+    "password": "test1234"
 }
