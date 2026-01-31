@@ -1,22 +1,16 @@
 import "dotenv/config";
 import express from "express";
-import { prisma } from "./prisma";
-import userRoute from "./routes/users";
+import cookieParser from "cookie-parser";
+import { registerRoutes } from "./routes";
+import { errorHandler } from "./middlewares/errorHandler";
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 
-app.get("/", async (req, res) => {
-  try {
-    const userCount = await prisma.user.count();
-    res.json(userCount == 0 ? "No users have been added" : userCount);
-  } catch (err) {
-    console.error(err);
-    res.sendStatus(500);
-  }
-});
+registerRoutes(app);
 
-app.use("/user", userRoute);
+app.use(errorHandler);
 
 const PORT = 3001;
 
