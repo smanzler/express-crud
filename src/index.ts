@@ -3,8 +3,10 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import { registerRoutes } from "./routes";
 import { errorHandler } from "./middlewares/errorHandler";
+import { logger } from "./middlewares/logger";
 
 const app = express();
+app.use(logger);
 app.use(express.json());
 app.use(cookieParser());
 

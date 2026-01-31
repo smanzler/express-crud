@@ -9,19 +9,19 @@ export async function login(req: Request<LoginBody>, res: Response) {
   const tokens = await AuthService.login(req.body);
   setRefreshTokenCookie(res, tokens.refreshToken);
 
-  res.json(tokens.accessToken);
+  res.json({ accessToken: tokens.accessToken });
 }
 
 export async function signup(req: Request<SignupBody>, res: Response) {
   const tokens = await AuthService.signup(req.body);
   setRefreshTokenCookie(res, tokens.refreshToken);
-  res.status(201).json(tokens.accessToken);
+  res.status(201).json({ accessToken: tokens.accessToken });
 }
 
 export async function refresh(req: Request, res: Response) {
   const tokens = await AuthService.refresh(req.refreshToken!);
   setRefreshTokenCookie(res, tokens.refreshToken);
-  res.json(tokens.accessToken);
+  res.json({ accessToken: tokens.accessToken });
 }
 
 export async function logout(req: Request, res: Response) {
