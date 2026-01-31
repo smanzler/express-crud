@@ -6,8 +6,11 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "tsx watch src/index.ts",
-    "lint": "eslint 'src/**/*.ts'"
+    "dev": "docker compose -f docker-compose.dev.yml up -d",
+    "dev:api": "tsx watch src/index.ts",
+    "lint": "eslint 'src/**/*.ts'",
+    "gen": "prisma generate",
+    "migrate": "prisma migrate dev"
   },
   "keywords": [],
   "author": "",

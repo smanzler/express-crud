@@ -1,4 +1,4 @@
-POST http://localhost:3001/auth/signup HTTP/1.1
+POST http://localhost:3001/auth/logout HTTP/1.1
 content-type: application/json
 
 {

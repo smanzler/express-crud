@@ -6,7 +6,7 @@ import type {
   RefreshTokenBody,
   MeBody,
 } from "../validations/auth.schemas";
-import { AuthService } from "../services/auth.service";
+import { AuthService } from "../services/auth.services";
 import { clearRefreshTokenCookie, setRefreshTokenCookie } from "../lib/cookies";
 
 export async function login(
