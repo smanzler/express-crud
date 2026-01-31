@@ -16,14 +16,5 @@ export const signupSchema = z.object({
   password,
 });
 
-export const refreshTokenBodySchema = z.object({
-  refreshToken: z.string().min(1, "refreshToken is required"),
-});
-
-export const meSchema = z.object({ user: z.object({ sub: z.string() }) });
-
 export type LoginBody = z.infer<typeof loginSchema>;
 export type SignupBody = z.infer<typeof signupSchema>;
-export type RefreshTokenBody = z.infer<typeof refreshTokenBodySchema>;
-
-export type MeBody = z.infer<typeof meSchema>;

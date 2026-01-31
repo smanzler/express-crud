@@ -1,54 +1,38 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { prisma } from "../db/prisma";
-import type {
-  LoginBody,
-  SignupBody,
-  RefreshTokenBody,
-  MeBody,
-} from "../validations/auth.schemas";
+import type { LoginBody, SignupBody } from "../validations/auth.schemas";
 import { AuthService } from "../services/auth.services";
 import { clearRefreshTokenCookie, setRefreshTokenCookie } from "../lib/cookies";
+import type { Request } from "../lib/types";
 
-export async function login(
-  req: Request<object, object, LoginBody>,
-  res: Response
-) {
+export async function login(req: Request<LoginBody>, res: Response) {
   const tokens = await AuthService.login(req.body);
   setRefreshTokenCookie(res, tokens.refreshToken);
 
   res.json(tokens.accessToken);
 }
 
-export async function signup(
-  req: Request<object, object, SignupBody>,
-  res: Response
-) {
+export async function signup(req: Request<SignupBody>, res: Response) {
   const tokens = await AuthService.signup(req.body);
   setRefreshTokenCookie(res, tokens.refreshToken);
   res.status(201).json(tokens.accessToken);
 }
 
-export async function refresh(
-  req: Request<object, object, RefreshTokenBody>,
-  res: Response
-) {
-  const tokens = await AuthService.refresh(req.body.refreshToken);
+export async function refresh(req: Request, res: Response) {
+  const tokens = await AuthService.refresh(req.refreshToken!);
   setRefreshTokenCookie(res, tokens.refreshToken);
   res.json(tokens.accessToken);
 }
 
-export async function logout(
-  req: Request<object, object, RefreshTokenBody>,
-  res: Response
-) {
-  await AuthService.logout(req.body.refreshToken);
+export async function logout(req: Request, res: Response) {
+  await AuthService.logout(req.refreshToken!);
   clearRefreshTokenCookie(res);
   res.json({ message: "Logged out successfully" });
 }
 
-export async function me(req: Request<object, object, MeBody>, res: Response) {
+export async function me(req: Request, res: Response) {
   const user = await prisma.user.findUnique({
-    where: { id: req.body.user.sub },
+    where: { id: req.userId! },
     select: {
       id: true,
       email: true,

@@ -1,9 +1,10 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { InternalServerError, UnauthorizedError } from "../lib/errors";
 import { AUTH_REFRESH_TOKEN_COOKIE_NAME } from "../lib/cookies";
 import { prisma } from "../db/prisma";
 import crypto from "crypto";
+import type { Request } from "../lib/types";
 
 export function requireAuth(
   req: Request,
@@ -33,7 +34,7 @@ export function requireAuth(
       return;
     }
 
-    req.user = { sub: payload.sub };
+    req.userId = payload.sub;
     next();
   } catch {
     next(new UnauthorizedError("Invalid or expired token"));
